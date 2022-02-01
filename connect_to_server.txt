@@ -1,0 +1,1 @@
+ssh ubuntu@130.225.39.229 -i P6.pem
