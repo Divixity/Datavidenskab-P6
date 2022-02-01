@@ -1,1 +1,10 @@
 ssh ubuntu@130.225.39.229 -i P6.pem
+
+Access GitHub:
+git status
+git add .
+git commit -m "Tekst"
+git push
+
+Username: Divixity
+PW: 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
