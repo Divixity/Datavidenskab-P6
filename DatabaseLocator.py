@@ -13,7 +13,6 @@ class DatabaseLocator:
         """
         self.__config_path = os.path.join(main.root, 'Config', 'database_path.ini')
         self.__database_path = self.__config_load()
-        self.__model_path = os.path.join(main.root, 'Project', 'Models')
 
     def __config_load(self):
         """
@@ -25,15 +24,11 @@ class DatabaseLocator:
 
         return config['database']['directory']
 
-    def get_path(self, sub_folder=None, model_path=False):
+    def get_path(self, sub_folder=None):
         """
         Returns the directory path to the database.
         """
-        if model_path:
-            path = self.__model_path
-
-        else:
-            path = self.__database_path
+        path = self.__database_path
 
         if sub_folder is None:
             return path
@@ -44,5 +39,3 @@ class DatabaseLocator:
 
 if __name__ == '__main__':
     test = DatabaseLocator()
-    for file in os.listdir(os.path.join(test.get_path(), 'bom')):
-        print(file)
