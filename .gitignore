@@ -113,3 +113,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 /Config/
+.idea/Datavidenskab-P6.iml
+.idea/modules.xml
