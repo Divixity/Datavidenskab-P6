@@ -4,7 +4,7 @@
     <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <value>
-          <list size="78">
+          <list size="79">
             <item index="0" class="java.lang.String" itemvalue="matplotlib-inline" />
             <item index="1" class="java.lang.String" itemvalue="pywinpty" />
             <item index="2" class="java.lang.String" itemvalue="threadpoolctl" />
@@ -83,6 +83,7 @@
             <item index="75" class="java.lang.String" itemvalue="webencodings" />
             <item index="76" class="java.lang.String" itemvalue="tensorflow" />
             <item index="77" class="java.lang.String" itemvalue="skopt" />
+            <item index="78" class="java.lang.String" itemvalue="graphviz" />
           </list>
         </value>
       </option>
