@@ -22,6 +22,8 @@ def PCA_function(X, number_of_PC, Skreeplot=True, reduced_dim_plot=True):
 
     print('Componenets are', pca.components_)
 
+    print(pca.components_[0])
+
     print('Singular values are', pca.singular_values_)
 
     if reduced_dim_plot == True:
@@ -36,19 +38,17 @@ def PCA_function(X, number_of_PC, Skreeplot=True, reduced_dim_plot=True):
             z=X_reduced_df[2],
             mode='markers',
             marker=dict(
-                size=5,
-                opacity=0.5
+                size=4,
+                opacity=0.3
             )
         ),
         ])
+
         fig2.update_layout(scene=dict(
             xaxis = dict(title = 'PC1'),
             yaxis = dict(title = 'PC2'),
             zaxis = dict(title = 'PC3'),
         ))
-        # fig2.update_xaxes(title='PC1')
-        # fig2.update_yaxes(title='PC2')
-        # fig2.update_zaxes(title='PC3')
 
         fig2.show()
 
@@ -61,4 +61,4 @@ if __name__ == '__main__':
     scale = StandardScaler()
     year_two_scaled = scale.fit_transform(year_two)
 
-    PCA_function(year_two_scaled, number_of_PC=0.9, Skreeplot=True, reduced_dim_plot=True)
+    PCA_function(year_two_scaled, number_of_PC=0.9, Skreeplot=False, reduced_dim_plot=False)
