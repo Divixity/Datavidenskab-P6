@@ -34,7 +34,7 @@ class DataRetriever:
 
         df = pd.read_pickle(path)
 
-        df.index = df["Timestamp"]
+        #df.index = df["Timestamp"]
 
         return df
 
