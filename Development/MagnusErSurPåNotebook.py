@@ -16,9 +16,10 @@ if __name__ == "__main__":
     powerproduced_attributes = [description.startswith("Instantaneous power produced") for description in watt_attributes["Description"]]
     gen_attributes = watt_attributes[powerproduced_attributes]
     gen_attributes = gen_attributes["Attribute"].tolist()
+    print(gen_attributes)
 
     # Define consuming attributes as attribute not having description 'Instantaneous power produced" and are in W.
-    not_powerproduced = [not attribute for attribute in powerproduced_attributes]
+    not_powerproduced = [subsystem != "PV" for subsystem in watt_attributes["Subsystem"]]
     con_attributes = watt_attributes[not_powerproduced]
     con_attributes = year_2[con_attributes["Attribute"].tolist()]
 
@@ -28,7 +29,7 @@ if __name__ == "__main__":
     correlation_pairs = dict()
     for rowIndex, row in correlations_df.iterrows(): #RowIndex is the row name, row is a pd.Series of (column name : entry value)
         for columnIndex, value in row.items(): #columnIndex is column name, value is the entry value
-            if value > 0.95: #If correlation is larger than threshold and row name and column name is not the same
+            if value > 0.80: #If correlation is larger than threshold and row name and column name is not the same
                 if rowIndex != columnIndex:
                     correlation_pairs.setdefault(rowIndex, []) #Insert row name as key if it does not already exist. Make the value pairs an empty list.
                     correlation_pairs[rowIndex].append(columnIndex) #Append the column name as value to the key.
@@ -46,9 +47,13 @@ if __name__ == "__main__":
     # print('Ny dict starter her')
     # for i in correlation_pairs_cleaned:
     #     print(i, correlation_pairs_cleaned[i])
-
+    print(len(con_attributes.columns))
     columnstodrop = list(correlation_pairs_cleaned.values())
     for column in con_attributes.columns:
         if [column] in columnstodrop:
             con_attributes = con_attributes.drop([column], axis = 1)
+    print(len(con_attributes.columns))
 
+    con_attributes = con_attributes.columns
+    con_attributes = list(con_attributes)
+    print(len(con_attributes), con_attributes)
