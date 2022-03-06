@@ -22,39 +22,46 @@ if __name__ == "__main__":
     not_powerproduced = [subsystem != "PV" for subsystem in watt_attributes["Subsystem"]]
     con_attributes = watt_attributes[not_powerproduced]
     con_attributes = year_2[con_attributes["Attribute"].tolist()]
+    con_attributes = list(con_attributes.columns)
+
+    energy_data = year_2[["Timestamp"] + gen_attributes + con_attributes]
+    total_consumed = energy_data[con_attributes].sum().sum()
+    print(total_consumed * (1/60) / 1000)
+    #energy_data["Sum Consuming"] = (energy_data[con_attributes].sum(axis=1) * (1/60) ) / 1000
 
     # Need to further sort in the consuming attributes as some are duplicates and measure the same thing
-    correlations_df = con_attributes.corr().abs()
-
-    correlation_pairs = dict()
-    for rowIndex, row in correlations_df.iterrows(): #RowIndex is the row name, row is a pd.Series of (column name : entry value)
-        for columnIndex, value in row.items(): #columnIndex is column name, value is the entry value
-            if value > 0.90: #If correlation is larger than threshold and row name and column name is not the same
-                if rowIndex != columnIndex:
-                    correlation_pairs.setdefault(rowIndex, []) #Insert row name as key if it does not already exist. Make the value pairs an empty list.
-                    correlation_pairs[rowIndex].append(columnIndex) #Append the column name as value to the key.
-
-    for i in correlation_pairs:
-        print(i, correlation_pairs[i])
-
-    #Hvis
-    correlation_pairs_cleaned = correlation_pairs.copy()
-    for value in correlation_pairs_cleaned.values():
-        for key in correlation_pairs_cleaned.keys():
-            if value == key:
-                correlation_pairs_cleaned.pop(key)
-
-    # print('Ny dict starter her')
-    # for i in correlation_pairs_cleaned:
-    #     print(i, correlation_pairs_cleaned[i])
-    print(len(con_attributes.columns))
-    columnstodrop = list(correlation_pairs_cleaned.values())
-    print("Columns to drop", columnstodrop)
-    for column in con_attributes.columns:
-        if [column] in columnstodrop:
-            con_attributes = con_attributes.drop([column], axis = 1)
-    print(len(con_attributes.columns))
-
-    con_attributes = con_attributes.columns
-    con_attributes = list(con_attributes)
-    print(len(con_attributes), con_attributes)
+    # correlations_df = con_attributes.corr().abs()
+    #
+    # correlation_pairs = dict()
+    # for rowIndex, row in correlations_df.iterrows(): #RowIndex is the row name, row is a pd.Series of (column name : entry value)
+    #     for columnIndex, value in row.items(): #columnIndex is column name, value is the entry value
+    #         if value > 0.90: #If correlation is larger than threshold and row name and column name is not the same
+    #             if rowIndex != columnIndex:
+    #                 correlation_pairs.setdefault(rowIndex, []) #Insert row name as key if it does not already exist. Make the value pairs an empty list.
+    #                 correlation_pairs[rowIndex].append(columnIndex) #Append the column name as value to the key.
+    #
+    # for i in correlation_pairs:
+    #     print(i, correlation_pairs[i])
+    #
+    # #Hvis
+    # correlation_pairs_cleaned = correlation_pairs.copy()
+    # for value in correlation_pairs_cleaned.values():
+    #     for key in correlation_pairs_cleaned.keys():
+    #         if value == key:
+    #             correlation_pairs_cleaned.pop(key)
+    #
+    # # print('Ny dict starter her')
+    # # for i in correlation_pairs_cleaned:
+    # #     print(i, correlation_pairs_cleaned[i])
+    # print(len(con_attributes.columns))
+    # columnstodrop = list(correlation_pairs_cleaned.values())
+    # print("Columns to drop", columnstodrop)
+    # for column in con_attributes.columns:
+    #     if [column] in columnstodrop:
+    #         con_attributes = con_attributes.drop([column], axis = 1)
+    # print(len(con_attributes.columns))
+    #
+    # con_attributes = con_attributes.columns
+    # con_attributes = list(con_attributes)
+    # print(len(con_attributes), con_attributes)
+#%%
