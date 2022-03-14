@@ -64,23 +64,23 @@ if __name__ == "__main__":
     fig.add_annotation(x=year2hour['Timestamp'][332], yref='paper', y=1.04, text='Week Switch', showarrow=False)
     fig.show()
 
-    # countnanvalues_dict = {}
-    # for column in year2hour.columns:
-    #     columnnanvalue = year2hour[column].isnull().sum()
-    #     if columnnanvalue > 0:
-    #         countnanvalues_dict[column] = columnnanvalue
-    #         print(column, "has ", columnnanvalue, " number of NaN values" )
-    #
-    # countnanvalues_df = pd.DataFrame.from_dict(countnanvalues_dict, orient='index', columns=['NaN']).sort_values(by=['NaN'], ascending=False)
-    # #countnanvalues_df.drop(['SHW_GlycolFlowHXCoriolisSHW', 'SHW_WaterFlowHXCoriolisSHW', 'SHW_GlycolFlowRateHXCoriolisSHW', 'SHW_WaterFlowRateHXCoriolisSHW'], axis=0, inplace=True)
-    # print(countnanvalues_df)
-    #
-    # subsystemnanvalues_df = countnanvalues_df.groupby([s.split('_')[0] for s in countnanvalues_df.index.values]).sum()
-    # subsystemnanvalues_df = subsystemnanvalues_df.sort_values(by=['NaN'], ascending=False)
-    #
-    # fig2 = make_subplots(rows=1, cols=2)
-    # #fig2.add_trace(go.Bar(name='Missing values in channels', x=countnanvalues_df.index, y=countnanvalues_df['NaN']), row=1, col=1)
-    # fig2.add_trace(go.Bar(name='Missing values per Subsystem groups', x=subsystemnanvalues_df.index, y=subsystemnanvalues_df['NaN']), row=1, col=2)
-    # fig2.update_yaxes(title='Number of Missing Values')
-    # fig2.show()
-#%%
+    countnanvalues_dict = {}
+    for column in year2hour.columns:
+        columnnanvalue = year2hour[column].isnull().sum()
+        if columnnanvalue > 0:
+            countnanvalues_dict[column] = columnnanvalue
+            print(column, "has ", columnnanvalue, " number of NaN values" )
+
+    countnanvalues_df = pd.DataFrame.from_dict(countnanvalues_dict, orient='index', columns=['NaN']).sort_values(by=['NaN'], ascending=False)
+    #countnanvalues_df.drop(['SHW_GlycolFlowHXCoriolisSHW', 'SHW_WaterFlowHXCoriolisSHW', 'SHW_GlycolFlowRateHXCoriolisSHW', 'SHW_WaterFlowRateHXCoriolisSHW'], axis=0, inplace=True)
+    print(countnanvalues_df)
+
+    subsystemnanvalues_df = countnanvalues_df.groupby([s.split('_')[0] for s in countnanvalues_df.index.values]).sum()
+    subsystemnanvalues_df = subsystemnanvalues_df.sort_values(by=['NaN'], ascending=False)
+
+    fig2 = make_subplots(rows=1, cols=2)
+    #fig2.add_trace(go.Bar(name='Missing values in channels', x=countnanvalues_df.index, y=countnanvalues_df['NaN']), row=1, col=1)
+    fig2.add_trace(go.Bar(name='Missing values per Subsystem groups', x=subsystemnanvalues_df.index, y=subsystemnanvalues_df['NaN']), row=1, col=2)
+    fig2.update_yaxes(title='Number of Missing Values')
+    fig2.show()
+
