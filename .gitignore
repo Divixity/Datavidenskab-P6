@@ -115,3 +115,6 @@ dmypy.json
 /Config/
 .idea/Datavidenskab-P6.iml
 .idea/modules.xml
+
+.iml
+.xml
