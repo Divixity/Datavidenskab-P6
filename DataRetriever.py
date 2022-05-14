@@ -13,9 +13,9 @@ class DataRetriever:
 
     def __init__(self):
         self.__config_path = os.path.join(main.root, 'Config', 'database_path.ini')
-        self.__data_path = self.__config_load()
+        self.__data_path = self.config_load()
 
-    def __config_load(self):
+    def config_load(self):
         """
         Private method to read config file for path to OneDrive.
         :return: Path.
