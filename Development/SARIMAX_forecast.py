@@ -36,14 +36,16 @@ def sarimax_prediction(date, pv):
     exog_attributes = list(X.columns)
     exog_attributes.remove('Generated Energy')
 
-    pred = loaded_model.get_prediction(start=date, end=date + pd.Timedelta(days=2, hours=23),
-                                       exog=X[exog_attributes][date: date + pd.Timedelta(days=2, hours=23)])
-    sarimax_predictions = pd.DataFrame(pred.predicted_mean)
-    sarimax_predictions.rename(columns={'predicted_mean': 'Prediction'}, inplace=True)
+    pred = loaded_model.predict(start=date, end=date + pd.Timedelta(days=2, hours=23),
+                                exog=X[exog_attributes][date: date + pd.Timedelta(days=2, hours=23)])
+    # sarimax_predictions = pd.DataFrame(pred.predicted_mean)
+    # sarimax_predictions.rename(columns={'predicted_mean': 'Prediction'}, inplace=True)
 
-    return sarimax_predictions
+    return pred
 
 
 if __name__ == "__main__":
-    print(sarimax_prediction(date=pd.Timestamp(year=2016, month=1, day=24),
-                             pv=RETRIEVER.get_data(file_name='All-Subsystems-hour-Year2.pkl')[RETRIEVER.get_attributes(file_name='producing_attributes.pkl')].sum(axis=1).clip(lower=0) / 1000))
+    print(sarimax_prediction(date=pd.Timestamp(year=2016, month=1, day=21),
+                             pv=RETRIEVER.get_data(file_name='All-Subsystems-hour-Year2.pkl')[
+                                    RETRIEVER.get_attributes(file_name='producing_attributes.pkl')].sum(axis=1).clip(
+                                 lower=0) / 1000))
