@@ -34,10 +34,8 @@ def fourierExtrapolation(data: np.array, number_of_predictions: int, n_sinusoids
 
 
 if __name__ == "__main__":
-    from sklearn.metrics import mean_squared_error
     import DataRetriever as dr
 
     RETRIEVER = dr.DataRetriever()
-    actual = (RETRIEVER.get_data(file_name='All-Subsystems-hour-Year2.pkl')[RETRIEVER.get_attributes(file_name='consuming_attributes.pkl')].sum(axis=1).clip(lower=0) / 1000)["2016-01-17 00:00:00":"2016-01-19 23:00:00"]
-    test = (RETRIEVER.get_data(file_name='All-Subsystems-hour-Year2.pkl')[RETRIEVER.get_attributes(file_name='consuming_attributes.pkl')].sum(axis=1).clip(lower=0) / 1000)["2016-01-10 00:00:00":"2016-01-16 23:00:00"]
-    print(mean_squared_error(actual, fourierExtrapolation(test, 72, 70)[len(test):], squared=False))
+    test = (RETRIEVER.get_data(file_name='All-Subsystems-hour-Year2.pkl')[RETRIEVER.get_attributes(file_name='producing_attributes.pkl')].sum(axis=1).clip(lower=0) / 1000)["2016-01-10 00:00:00":"2016-01-16 23:00:00"]
+    print(fourierExtrapolation(test, 72, 5)[len(test):])
